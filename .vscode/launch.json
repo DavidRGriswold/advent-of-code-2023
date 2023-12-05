@@ -11,8 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "args": ["testd3.txt"],
-            "program": "${workspaceFolder}\\day3.js"
+            "args": ["testd4.txt"],
+            "program": "${workspaceFolder}\\day4.js"
         }
     ]
 }
