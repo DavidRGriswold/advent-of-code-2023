@@ -11,7 +11,7 @@ let seeds = sections[0]
     .split(" ")
     .map(a => Number(a));
 
-    //this would have been nice but the numbers are too big
+//this would have been nice but the numbers are too big
 // let seeds2 = [];
 // for (let i = 0; i < seeds.length; i+=2) {
 //     for (j = 0; j<seeds[i+1];j++) {
@@ -21,39 +21,45 @@ let seeds = sections[0]
 sections.shift();
 let maps = sections.map(a => processMap(a));
 
-locations = seeds.map(a => 
-    maps.reduce( findDestination,a));
+locations = seeds.map(a =>
+    maps.reduce(findDestination, a));
 
-let minLoc = maps.reduce(findDestination,seeds[0]);
-for (let i =0; i < seeds.length; i+=2) {
-    for (let j = seeds[i]; j < seeds[i]+seeds[i+1];j++) {
-        let curLoc = maps.reduce(findDestination,j);
+// part 1 answer
+console.log(locations.sort((a, b) => a - b)[0]);
+
+// part 2 completion
+let minLoc = maps.reduce(findDestination, seeds[0]);
+for (let i = 0; i < seeds.length; i += 2) {
+    for (let j = seeds[i]; j < seeds[i] + seeds[i + 1]; j++) {
+        let curLoc = maps.reduce(findDestination, j);
         if (curLoc < minLoc) minLoc = curLoc;
     }
 }
+//part2 answer
 console.log(minLoc);
 
-//locations2 = seeds2.map(a => 
-//           maps.reduce( (accumulator,currentValue) => 
-//                findDestination(accumulator,currentValue),a));
-console.log(locations.sort((a,b)=>a-b)[0]);
-//console.log(locations2.sort((a,b)=>a-b)[0]);
-
-// convert a section of text into an array of arrays
-// sorted via the source range start point
+/** convert a section of text into an array of arrays
+ sorted via the source range start point
+ */
 function processMap(mapText) {
     let array = mapText.split("\r\n");
     array.shift();
     return array
         .map(a => a.split(" ")
-        .map(b => Number(b)))
+            .map(b => Number(b)))
         .sort((a, b) => a[1] - b[1])
 }
 
-function findDestination(value,map) {
+/**
+ * given a value and a single map, return the destination value
+ * @param {*} value 
+ * @param {*} map 
+ * @returns 
+ */
+function findDestination(value, map) {
     //return the destination position given a value and a map
     for (let row of map) {
-        if (row[1]<=value && row[1]+row[2]>value) {
+        if (row[1] <= value && row[1] + row[2] > value) {
             return row[0] + (value - row[1]);
         }
     }
